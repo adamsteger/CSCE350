@@ -9,21 +9,28 @@ using namespace std;
 int partition(vector<float> &v, int start, int end) {
     int pivot = start;
     int j = end;
-    for (int i = end; i >= start; --i) {
-        if (v[i] >= v[pivot]) {
+    int i = start;
+    while (i <= j) {
+        while (v[i] < v[pivot]) {
+            i++;
+        }
+        while (v[j] > v[pivot]) {
+            j--;
+        }
+        if (i <= j) {
             swap(v[i], v[j]);
-            --j;
+            i++;
+            j--;
         }
     }
-    swap(v[j], v[pivot]);
-    return j;
+    return i;
 }
 
 void quicksort(vector<float> &v, int start, int end) {
     if (start < end) {
         int s = partition(v, start, end);
         quicksort(v, start, s-1);
-        quicksort(v, s+1, end);
+        quicksort(v, s, end);
     }
 }
 
