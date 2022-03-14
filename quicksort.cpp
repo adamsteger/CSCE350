@@ -2,8 +2,10 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 
 int partition(vector<float> &v, int start, int end) {
@@ -56,6 +58,10 @@ int main(int argc, char *argv[]) {
         }
     }
     in.close();
+    auto start = high_resolution_clock::now();
     quicksort(v, 0, v.size()-1);
+    auto finish = high_resolution_clock::now();
+    auto time = duration_cast<microseconds>(finish - start);
+    cout << "Execution time: " << time.count() << " microseconds" << "\n";
     printVector(v);
 }
