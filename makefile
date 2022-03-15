@@ -11,6 +11,9 @@ compile = $(cpp) $(flags) -c
 quicksort: quicksort.cpp
 	$(link) $@ $^
 
+quicksort2: quicksort2.cpp
+	$(link) $@ $^
 clean:
 	$(RM) quicksort
 	$(RM) output.txt
+	$(RM) quicksort2
