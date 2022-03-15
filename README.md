@@ -12,5 +12,5 @@ To compile/run code, use the following instructions:
     make quicksort2
     ./quicksort2
 
-To clear executable, use the following instructions:
+To clear executable, use the following instruction:
     make clean

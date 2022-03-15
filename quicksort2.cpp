@@ -48,27 +48,27 @@ void printVector(vector<float> &v) {
 vector<float> generateRandomList(int size) {
     vector<float> v;
     for (int i = 0; i < size; i++) {
-        float x = rand() % 10000 + 1;
+        float x = rand() % 10000 + 1;  // Generate random number between 1 and 10000
         v.push_back(x);
     }
     return v;
 }
 
 double findAverageTime(int size) {
-    vector<double> averageTime;
-    for (int i = 0; i < 100; i++) {
-        vector<float> v = generateRandomList(size);
+    vector<double> averageTime;  // Declare a vector of average times so each iteration can be recorded
+    for (int i = 0; i < 100; i++) {  // Repeat for 100 inputs, adding time each iteration
+        vector<float> v = generateRandomList(size);  // For each iteration, get a random float vector with a given size
         auto start = high_resolution_clock::now();
-        quicksort(v, 0, v.size()-1);
+        quicksort(v, 0, v.size()-1);  // Sort random vector
         auto finish = high_resolution_clock::now();
         auto time = duration_cast<microseconds>(finish - start).count();
-        averageTime.push_back(time);
+        averageTime.push_back(time);  // Add duration to vector
     }
     double totalTime;
     for (int i = 0; i < averageTime.size(); i++) {
-        totalTime += averageTime[i];
+        totalTime += averageTime[i];  // Add each time in vector to find total time
     }
-    totalTime = totalTime/100;
+    totalTime = totalTime/100; // Divide total time by number of iterations to find average duration
     return totalTime;
 }
 
