@@ -30,7 +30,7 @@ void heapify(int *arr, int n, int i) {
 }
 
 void heapBottomUp(int *arr, int n) {
-    for (int i = floor(n/2); i >= 1; i--) {
+    for (int i = floor(n/2); i >= 1; i--) {  // Start at last parent
         heapify(arr, n, i);  // Heapify for each parent in heap
     }
 }
@@ -45,7 +45,7 @@ void heapsort(int *arr, int n) {
 void printHeap(int *arr, int n) {
     ofstream out;
     out.open("output.txt");  // Create output file
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i <= n; i++) {
         out << arr[i] << " ";  // Print out each value of heap in order
     }
     out << "\n";
@@ -55,7 +55,7 @@ void printHeap(int *arr, int n) {
 void printSortedHeap(int *arr, int n) {
     ofstream out;
     out.open("output.txt", ios_base::app);  // Create output file
-    for (int i = 1; i < n; i++) {
+    for (int i = n; i > 0; i--) {
         out << arr[i] << " ";  // Print out each value of heap in order
     }
     out.close();  // Close stream to output file
@@ -78,16 +78,16 @@ int main(int argc, char *argv[]) {
         }
         // Start timer before algorithm is called
         auto start = high_resolution_clock::now();
-        heapBottomUp(arr, n+1);
+        heapBottomUp(arr, n);
         // End timer directly after algorithm finishes
         auto finish = high_resolution_clock::now();
         // Calculate duration by subtracting start from finish
         auto time = duration_cast<nanoseconds>(finish - start);
         // Output execution time
         cout << time.count() << " nanoseconds" << "\n";
-        printHeap(arr, n+1);  // Output heap to file
-        heapsort(arr, n+1);  // Perform Heapsort on array
-        printSortedHeap(arr, n+1);  // Append sorted heap to file
+        printHeap(arr, n);  // Output heap to file
+        heapsort(arr, n);  // Perform Heapsort on array
+        printSortedHeap(arr, n);  // Append sorted heap to file
     }
     in.close();  // Close input stream
 }
