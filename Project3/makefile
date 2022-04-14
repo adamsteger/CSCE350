@@ -11,9 +11,9 @@ compile = $(cpp) $(flags) -c
 horspool: horspool.cpp
 	$(link) $@ $^
 
-boyermoore: boyermoore.cpp
+boyer: boyer.cpp
 	$(link) $@ $^
 clean:
 	$(RM) horspool
 	$(RM) output.txt
-	$(RM) boyermoore
+	$(RM) boyer

@@ -7,34 +7,51 @@ using namespace std;
 using namespace std::chrono;
 
 int* shiftTable(string pattern) {
-    int table[27];
+    static int table[27];  // Allocate memory for array
     int m = pattern.length();
     for (int i = 0; i < 27; i++) {
-        table[i] = m;
+        table[i] = m;  // Initialize all values to length of pattern
     }
     for (int i = 0; i <= m - 2; i++) {
-        table[pattern[i]] = m - 1 - i;
+        // Convert character to ascii int
+        int index = static_cast<int>(pattern[i]);
+        if (index < 95) {  // Check if lowercase
+            index -= 65;
+        } else if (index > 95) {  // Check if uppercase
+            index -= 96;
+        } else {
+            index -= 95;  // Must be space
+        }
+        table[index] = m - 1 - i;  // Set value of character in table
     }
     return table;
 }
 
 int horspool(string pattern, string text, int m) {
-    int *table = shiftTable(pattern);
-    int i = m - 1;
+    int *table = shiftTable(pattern);  // Create shift table
+    int i = m - 1;  // i represents current index of text
     int n = text.length();
-    while (i <= n - 1) {
-        int k = 0;
+    while (i <= n - 1) {  // Iterate until end of text is reached
+        int k = 0;  // k represents number of matched characters
         while (k <= m-1 && pattern[m-1-k] == text[i-k]) {
-            k++;
+            k++;  // Increase k if match found
         }
-        if (k == m) {
-            return i - m + 1;
+        if (k == m) {  // Check if entire pattern is matched
+            return i - m + 1;  // Return index of first match
         } else {
-            int num = static_cast<int>(text[i]);
-            i = i + table[text[i]];
+            // Convert character to ascii int
+            int index = static_cast<int>(text[i]);
+            if (index < 95) {  // Check if uppercase
+                index -= 65;
+            } else if (index > 95) {  // Check if lowercase
+                index -= 96;
+            } else {
+                index -= 95;  // Must be space
+            }
+            i = i + table[index];  // Shift by value in shift table
         }
     }
-    return -1;
+    return -1;  // Return -1 if no match found
 }
 
 
@@ -50,9 +67,9 @@ int main(int argc, char *argv[]) {
         string pattern = line;
         getline(in, line);
         string text = line;
+        int m = pattern.length();
         // Start timer before algorithm is called
         auto start = high_resolution_clock::now();
-        int m = pattern.length();
         output = horspool(pattern, text, m);
         // End timer directly after algorithm finishes
         auto finish = high_resolution_clock::now();
